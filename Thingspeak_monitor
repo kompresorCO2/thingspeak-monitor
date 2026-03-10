@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>ESP32 monitor</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f0f0f0;
+}
+
+table{
+    border-collapse: collapse;
+    background:white;
+}
+
+td,th{
+    border:1px solid #999;
+    padding:8px;
+}
+
+th{
+    background:#ddd;
+}
+</style>
+
+</head>
+
+<body>
+
+<h2>Kompresor CO2</h2>
+
+<table>
+<tr>
+<th>Parametr</th>
+<th>Hodnota</th>
+<th>Jednotka</th>
+</tr>
+
+<tr><td>Vstupní tlak</td><td id="f1">-</td><td>kPa</td></tr>
+<tr><td>Výstupní tlak</td><td id="f2">-</td><td>bar</td></tr>
+<tr><td>Požadovaná hmotnost</td><td id="f3">-</td><td>kg</td></tr>
+<tr><td>Skutečná hmotnost</td><td id="f4">-</td><td>kg</td></tr>
+<tr><td>Teplota vstupu</td><td id="f5">-</td><td>°C</td></tr>
+<tr><td>Teplota výstupu</td><td id="f6">-</td><td>°C</td></tr>
+<tr><td>Stav</td><td id="f7">-</td><td></td></tr>
+<tr><td>Čas běhu</td><td id="f8">-</td><td>min</td></tr>
+
+</table>
+
+<script>
+
+const url="https://api.thingspeak.com/channels/3292199/feeds/last.json";
+
+function updateData(){
+
+fetch(url)
+.then(r=>r.json())
+.then(data=>{
+
+document.getElementById("f1").innerText=data.field1;
+document.getElementById("f2").innerText=data.field2;
+document.getElementById("f3").innerText=data.field3;
+document.getElementById("f4").innerText=data.field4;
+document.getElementById("f5").innerText=data.field5;
+document.getElementById("f6").innerText=data.field6;
+
+if(data.field7==1)
+document.getElementById("f7").innerText="RUN";
+else
+document.getElementById("f7").innerText="STOP";
+
+document.getElementById("f8").innerText=data.field8;
+
+});
+
+}
+
+updateData();
+setInterval(updateData,15000);
+
+</script>
+
+</body>
+</html>
