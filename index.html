@@ -57,7 +57,10 @@ th{
 
 <script>
 
-const url="https://api.thingspeak.com/channels/3292199/feeds/last.json";
+const params = new URLSearchParams(window.location.search);
+const channel = params.get("id") || "3292199";
+
+const url = "https://api.thingspeak.com/channels/" + channel + "/feeds/last.json";
 
 function updateData(){
 
