@@ -35,7 +35,7 @@ th{
 
 <body>
 
-<h2>Kompresor CO2</h2>
+<h2 id="title">Kompresor CO2</h2>
 
 <table>
 <tr>
@@ -59,6 +59,9 @@ th{
 
 const params = new URLSearchParams(window.location.search);
 const channel = params.get("id") || "3292199";
+
+document.getElementById("title").innerText =
+"Kompresor CO2 - kanál " + channel;
 
 const url = "https://api.thingspeak.com/channels/" + channel + "/feeds/last.json";
 
